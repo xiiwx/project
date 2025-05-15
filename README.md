@@ -32,7 +32,6 @@ bool: Успешность удаления (true/false).
 Параметры: 
 const char* filename: имя файла (string).
 const char* content: содержимое файла (string).
-
 Возвращаемое значение:
 bool: возвращает true, если файл успешно создан, и false в противном случае.
 
