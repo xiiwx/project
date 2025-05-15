@@ -29,17 +29,21 @@ bool: Успешность удаления (true/false).
 ## Новый файл
 
 Название функции: new_file
+
 Параметры: 
 const char* filename: имя файла (string).
 const char* content: содержимое файла (string).
+
 Возвращаемое значение:
 bool: возвращает true, если файл успешно создан, и false в противном случае.
 
 ## Изменить файл
 
 Название функции: change_file
+
 Параметры:
 const char* filename: имя файла (string).
 const char* new_content: новое содержимое файла (string).
+
 Возвращаемое значение:
 bool: возвращает true, если файл успешно изменен, и false, если файл не найден.
