@@ -52,14 +52,14 @@ bool delete_file(const char* filename)
 }
 
 // новый файл
-bool create_new_file(const char* filename, const char* content) 
+bool new_file(const char* filename, const char* content) 
 {
     snprintf(filesystem + strlen(filesystem), FS_SIZE - strlen(filesystem), "%s\n%s\n", filename, content);
     return true;
 }
 
 // изменить файл
-bool modify_file(const char* filename, const char* new_content) 
+bool change_file(const char* filename, const char* new_content) 
 {
     char temp[FS_SIZE] = "";
     char* line = strtok(filesystem, "\n");
