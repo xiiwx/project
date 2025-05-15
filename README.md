@@ -30,8 +30,8 @@ bool: Успешность удаления (true/false).
 
 Название функции: new_file
 Параметры: 
-const char* filename: имя файла (строка).
-const char* content: содержимое файла (строка).
+const char* filename: имя файла (string).
+const char* content: содержимое файла (string).
 
 Возвращаемое значение:
 bool: возвращает true, если файл успешно создан, и false в противном случае.
@@ -40,7 +40,7 @@ bool: возвращает true, если файл успешно создан, 
 
 Название функции: change_file
 Параметры:
-const char* filename: имя файла (строка).
-const char* new_content: новое содержимое файла (строка).
+const char* filename: имя файла (string).
+const char* new_content: новое содержимое файла (string).
 Возвращаемое значение:
 bool: возвращает true, если файл успешно изменен, и false, если файл не найден.
