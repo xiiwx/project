@@ -3,7 +3,6 @@
 #include <string.h>
 
 #define MAX_FILE_SIZE 2048
-#define MAX_LINES 256
 
 // Открыть или создать файл
 FILE* open_file(const char* filename) {
