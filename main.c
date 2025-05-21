@@ -16,7 +16,7 @@ int main() {
     char* file_content = view_file(filename);
     if (file_content) {
         printf("Содержимое файла: %s\n", file_content);
-        free(file_content); // Освобождаем память
+        free(file_content); 
     } else {
         printf("Ошибка при просмотре файла.\n");
     }
