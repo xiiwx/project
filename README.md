@@ -39,7 +39,7 @@
 
 ## Функция изменить файл
 
-Название функции: change_file
+Название функции: modify_file
 
 Параметры:
 - `const char* filename`(string): имя файла.
