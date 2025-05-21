@@ -2,16 +2,15 @@
 #define FILESYSTEM_H
 
 #include <stdio.h>
-#include <stdbool.h>
 
-FILE* open_file(const char* filename);
+FILE* open_fs(const char* filename);
 
-char* view_file(const char* filename);
+void view_file(const char* fs_filename, const char* target_filename);
 
-bool delete_file(const char* filename);
+void delete_file(const char* fs_filename, const char* target_filename);
 
-bool write_file(const char* filename, const char* data);
+void add_new_file(const char* fs_filename, const char* new_filename, const char* content_lines[], int content_count);
 
-bool file_exists(const char* filename);
+void modify_file(const char* fs_filename, const char* target_filename, const char* new_content[], int new_count);
 
-#endif 
+#endif
