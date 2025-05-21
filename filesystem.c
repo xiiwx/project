@@ -4,7 +4,7 @@
 
 #define MAX_FILE_SIZE 2048
 
-// Открыть или создать файл
+// Открыть файл
 FILE* open_file(const char* filename) {
     FILE* file = fopen(filename, "r+");
     if (file == NULL) {
@@ -13,7 +13,7 @@ FILE* open_file(const char* filename) {
     return file;
 }
 
-// Показать содержимое файла
+// Просмотреть содержимое файла
 void view_file(const char* fs_filename, const char* target_filename) {
     FILE* fs = fopen(fs_filename, "r");
     if (!fs) {
