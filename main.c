@@ -39,7 +39,7 @@ int main() {
                 content[count] = strdup(line);
                 count++;
             }
-            add_new_file(fs_name, arg1, content, count);
+            new_file(fs_name, arg1, content, count);
             for (int i = 0; i < count; i++) free(content[i]);
 
         } else if (strcmp(command, "удалить") == 0 && arg1) {
