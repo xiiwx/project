@@ -45,8 +45,10 @@
 Название функции: modify_file
 
 Параметры:
-- `const char* filename`(string): имя файла.
-- `const char* new_content`(string): новое содержимое файла.
+- `fs_filename` (const char*)
+- `target_filename` (const char*)
+- `new_content[]` (const char*[])
+- `new_count` (int)
 
 Возвращаемое значение:
 - `bool`: возвращает true, если файл успешно изменен, и false, если файл не найден.
