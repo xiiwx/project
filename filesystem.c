@@ -6,7 +6,7 @@
 #define MAX_LINES 256
 
 // Открыть или создать файл
-FILE* open_fs(const char* filename) {
+FILE* open_file(const char* filename) {
     FILE* file = fopen(filename, "r+");
     if (file == NULL) {
         file = fopen(filename, "w+");
