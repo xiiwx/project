@@ -31,8 +31,11 @@
 Название функции: new_file
 
 Параметры: 
-- `const char* filename`(string): имя файла.
-- `const char* content`(string): содержимое файла.
+
+- `fs_filename` (const char*)
+- `new_filename` (const char*)
+- `content_lines[]` (const char*[]) — массив строк
+- `content_count` (int) — количество строк
 
 Возвращаемое значение:
 - `bool`: возвращает true, если файл успешно создан, и false в противном случае.
