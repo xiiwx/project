@@ -102,7 +102,7 @@ void delete_file(const char* fs_filename, const char* target_filename) {
 }
 
 // Добавить новый файл
-void add_new_file(const char* fs_filename, const char* new_filename, const char* content_lines[], int content_count) {
+void new_file(const char* fs_filename, const char* new_filename, const char* content_lines[], int content_count) {
     FILE* fs = fopen(fs_filename, "a");
     if (!fs) {
         printf("Ошибка: не удалось открыть файловую систему\n");
