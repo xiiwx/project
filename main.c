@@ -2,7 +2,7 @@
 #include "filesystem.h"
 
 int main() {
-    const char* filename = "example.txt";
+    const char* filename = "text.txt";
     const char* content = "Hello, World!";
 
     // Создаем новый файл и записываем данные
