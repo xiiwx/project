@@ -2,87 +2,140 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FS_SIZE 1024
-char filesystem[FS_SIZE];
+#define MAX_FILE_SIZE 2048
+#define MAX_LINES 256
 
-// открыть или создать файл
-FILE* open_file(const char* filename) 
-{
-    return fopen("filesystem.txt", "a+");
-}
-
-// посмотреть файл
-char* view_file(const char* filename) 
-{
-    char* line = strtok(filesystem, "\n");
-    while (line != NULL) 
-    {
-        if (strcmp(line, filename) == 0) 
-        {
-            return strtok(NULL, "\n");
-        }
-        line = strtok(NULL, "\n");
+// Открыть или создать файл
+FILE* open_fs(const char* filename) {
+    FILE* file = fopen(filename, "r+");
+    if (file == NULL) {
+        file = fopen(filename, "w+");
     }
-    return NULL;
+    return file;
 }
 
-// удалить файл
-bool delete_file(const char* filename) 
-{
-    char temp[FS_SIZE] = "";
-    char* line = strtok(filesystem, "\n");
+// Показать содержимое файла
+void view_file(const char* fs_filename, const char* target_filename) {
+    FILE* fs = fopen(fs_filename, "r");
+    if (!fs) {
+        printf("Ошибка: не удалось открыть файловую систему\n");
+        return;
+    }
+
+    char buffer[MAX_FILE_SIZE] = {0};
+    fread(buffer, 1, MAX_FILE_SIZE - 1, fs);
+    fclose(fs);
+
+    char* lines[MAX_LINES];
+    int count = 0;
+
+    char* token = strtok(buffer, "\n");
+    while (token && count < MAX_LINES) {
+        lines[count++] = token;
+        token = strtok(NULL, "\n");
+    }
+
     int found = 0;
-
-    while (line != NULL) 
-    {
-        if (found || strcmp(line, filename) == 0) 
-        {
+    for (int i = 0; i < count; i++) {
+        if (strcmp(lines[i], target_filename) == 0) {
             found = 1;
-        } 
-        else 
-        {
-            strcat(temp, line);
-            strcat(temp, "\n");
+            for (int j = i + 1; j < count; j++) {
+                if (lines[j][0] == '/') break;
+                printf("%s\n", lines[j]);
+            }
+            break;
         }
-        line = strtok(NULL, "\n");
     }
-    strncpy(filesystem, temp, FS_SIZE - 1);
-    filesystem[FS_SIZE - 1] = '\0';
-    return found;
+
+    if (!found) {
+        printf("Файл не найден\n");
+    }
 }
 
-// новый файл
-bool new_file(const char* filename, const char* content) 
-{
-    snprintf(filesystem + strlen(filesystem), FS_SIZE - strlen(filesystem), "%s\n%s\n", filename, content);
-    return true;
+// Удалить файл
+void delete_file(const char* fs_filename, const char* target_filename) {
+    FILE* fs = fopen(fs_filename, "r");
+    if (!fs) {
+        printf("Ошибка: не удалось открыть файловую систему\n");
+        return;
+    }
+
+    char buffer[MAX_FILE_SIZE] = {0};
+    fread(buffer, 1, MAX_FILE_SIZE - 1, fs);
+    fclose(fs);
+
+    char* lines[MAX_LINES];
+    int count = 0;
+
+    char* token = strtok(buffer, "\n");
+    while (token && count < MAX_LINES) {
+        lines[count++] = token;
+        token = strtok(NULL, "\n");
+    }
+
+    int start = -1, end = count;
+    for (int i = 0; i < count; i++) {
+        if (strcmp(lines[i], target_filename) == 0) {
+            start = i;
+            for (int j = i + 1; j < count; j++) {
+                if (lines[j][0] == '/') {
+                    end = j;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+
+    if (start == -1) {
+        printf("Файл не найден\n");
+        return;
+    }
+
+    FILE* new_fs = fopen(fs_filename, "w");
+    for (int i = 0; i < count; i++) {
+        if (i < start || i >= end) {
+            fprintf(new_fs, "%s\n", lines[i]);
+        }
+    }
+    fclose(new_fs);
 }
 
-// изменить файл
-bool change_file(const char* filename, const char* new_content) 
-{
-    char temp[FS_SIZE] = "";
-    char* line = strtok(filesystem, "\n");
-    int found = 0;
-
-    while (line != NULL) 
-    {
-        if (strcmp(line, filename) == 0) 
-        {
-            found = 1;
-            strcat(temp, line);
-            strcat(temp, "\n");
-            strcat(temp, new_content);
-            strcat(temp, "\n");
-        } 
-        else 
-        {
-            strcat(temp, line);
-            strcat(temp, "\n");
-        }
-        line = strtok(NULL, "\n");
+// Добавить новый файл
+void add_new_file(const char* fs_filename, const char* new_filename, const char* content_lines[], int content_count) {
+    FILE* fs = fopen(fs_filename, "a");
+    if (!fs) {
+        printf("Ошибка: не удалось открыть файловую систему\n");
+        return;
     }
-    strncpy(filesystem, temp, FS_SIZE - 1);
-    filesystem[FS_SIZE - 1] = '\0';
-    return found;
+
+    FILE* check_fs = fopen(fs_filename, "r");
+    if (check_fs) {
+        char buffer[MAX_FILE_SIZE] = {0};
+        fread(buffer, 1, MAX_FILE_SIZE - 1, check_fs);
+        fclose(check_fs);
+
+        char* token = strtok(buffer, "\n");
+        while (token) {
+            if (strcmp(token, new_filename) == 0) {
+                printf("Ошибка: файл с таким именем уже существует\n");
+                fclose(fs);
+                return;
+            }
+            token = strtok(NULL, "\n");
+        }
+    }
+
+    fprintf(fs, "%s\n", new_filename);
+    for (int i = 0; i < content_count; i++) {
+        fprintf(fs, "%s\n", content_lines[i]);
+    }
+    fprintf(fs, "/end\n");
+    fclose(fs);
+}
+
+// Измение содержимого файла
+void modify_file(const char* fs_filename, const char* target_filename, const char* new_content[], int new_count) {
+    delete_file(fs_filename, target_filename);
+    add_new_file(fs_filename, target_filename, new_content, new_count);
 }
