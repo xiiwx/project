@@ -7,7 +7,7 @@
 
 int main() {
     const char* fs_name = "file_system.txt";
-    open_fs(fs_name);
+    open_file(fs_name);
     
     char input[MAX_INPUT];
     char* command;
