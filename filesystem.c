@@ -17,7 +17,7 @@ FILE* open_file(const char* filename) {
 void view_file(const char* fs_filename, const char* target_filename) {
     FILE* fs = fopen(fs_filename, "r");
     if (!fs) {
-        printf("Ошибка: не удалось открыть файловую систему\n");
+        printf("Не удалось открыть файловую систему\n");
         return;
     }
 
@@ -55,7 +55,7 @@ void view_file(const char* fs_filename, const char* target_filename) {
 void delete_file(const char* fs_filename, const char* target_filename) {
     FILE* fs = fopen(fs_filename, "r");
     if (!fs) {
-        printf("Ошибка: не удалось открыть файловую систему\n");
+        printf("Не удалось открыть файловую систему\n");
         return;
     }
 
@@ -104,7 +104,7 @@ void delete_file(const char* fs_filename, const char* target_filename) {
 void new_file(const char* fs_filename, const char* new_filename, const char* content_lines[], int content_count) {
     FILE* fs = fopen(fs_filename, "a");
     if (!fs) {
-        printf("Ошибка: не удалось открыть файловую систему\n");
+        printf("Не удалось открыть файловую систему\n");
         return;
     }
 
@@ -117,7 +117,7 @@ void new_file(const char* fs_filename, const char* new_filename, const char* con
         char* token = strtok(buffer, "\n");
         while (token) {
             if (strcmp(token, new_filename) == 0) {
-                printf("Ошибка: файл с таким именем уже существует\n");
+                printf("Файл с таким именем уже существует\n");
                 fclose(fs);
                 return;
             }
